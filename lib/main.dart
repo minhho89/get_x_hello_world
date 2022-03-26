@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_x_ripples_code_tut/controller/counter_controller.dart';
 import 'package:get_x_ripples_code_tut/controller/student_controller.dart';
-import 'package:get_x_ripples_code_tut/models/student.dart';
 import 'package:get_x_ripples_code_tut/routes.dart';
 import 'package:get_x_ripples_code_tut/screens/screen_1.dart';
 import 'package:get_x_ripples_code_tut/screens/screen_2.dart';
@@ -29,9 +28,7 @@ class MyApp extends StatelessWidget {
 
 class HomeScreen extends StatelessWidget {
    HomeScreen({Key? key}) : super(key: key);
-
    var studentController = Get.put(StudentController());
-   final counterController = Get.put(CounterController());
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +40,15 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Obx(
-                ()=> Text('Count value is ${counterController.count}'),
-            ),
-            IconButton(onPressed: counterController.increment, icon: const Icon(Icons.add)),
+           GetX<CounterController>(
+             init: CounterController(),
+             builder: (controller) {
+               return Text('The value is ${controller.count}');
+             },
+           ),
+            IconButton(onPressed: () {
+              Get.find<CounterController>().increment();
+            }, icon: const Icon(Icons.add)),
             const Divider(),
              Obx(
                  ()=> Text(studentController.name)
