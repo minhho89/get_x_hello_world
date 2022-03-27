@@ -4,7 +4,7 @@ import '../models/student.dart';
 
 class StudentController extends GetxController {
 
-  var _student = Student(name: 'Tom', age: 27).obs;
+  final _student = Student(name: 'Tom', age: 27).obs;
 
   String get name {
     return _student.value.name;
